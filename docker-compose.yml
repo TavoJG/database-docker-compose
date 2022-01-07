@@ -3,7 +3,9 @@ volumes:
   database-volume: null
   pgadmin: null
 networks:
-  database-network: null
+  backend:
+    external:
+      name: backend
 services:
   database-admin:
     image: "dpage/pgadmin4:4.24"
@@ -18,7 +20,7 @@ services:
     depends_on:
       - database
     networks:
-      - database-network
+      - backend
   database:
     image: postgres:latest
     volumes:
@@ -35,4 +37,4 @@ services:
     ports:
       - $POSTGRES_EXPOSED_PORT:5432
     networks:
-      - database-network
+      - backend
